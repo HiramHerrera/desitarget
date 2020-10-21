@@ -89,8 +89,8 @@ def get_mtl_ledger_format():
     :class:`str`
         The file format for MTL ledgers. Should be "ecsv" or "fits".
     """
-    # ff = "fits"
-    ff = "ecsv"
+    ff = "fits"
+    #ff = "ecsv"
 
     return ff
 
