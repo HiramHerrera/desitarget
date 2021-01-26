@@ -96,7 +96,7 @@ def get_mtl_ledger_format():
 
 
 def make_mtl(targets, obscon, zcat=None, scnd=None,
-             trim=False, trimcols=False, trimtozcat=False):
+             trim=False, trimcols=False, trimtozcat=False,priorities_file=None):
     """Adds fiberassign and zcat columns to a targets table.
 
     Parameters
@@ -221,7 +221,7 @@ def make_mtl(targets, obscon, zcat=None, scnd=None,
     # ADM assign priorities. Only things in the zcat can have changed
     # ADM priorities. Anything else is assigned PRIORITY_INIT, below.
     priority, target_state = calc_priority(
-        targets_zmatcher, ztargets, obscon, state=True)
+        targets_zmatcher, ztargets, obscon, state=True, priorities_file=priorities_file)
 
     # If priority went to 0==DONOTOBSERVE or 1==OBS or 2==DONE, then
     # NUMOBS_MORE should also be 0.
@@ -255,8 +255,9 @@ def make_mtl(targets, obscon, zcat=None, scnd=None,
 
     # ADM any target that wasn't matched to the ZCAT should retain its
     # ADM original (INIT) value of PRIORITY and NUMOBS.
+    if "PRIORITY" not in mtl.columns:
+        mtl['PRIORITY'] = mtl['PRIORITY_INIT']
     mtl['NUMOBS_MORE'] = mtl['NUMOBS_INIT']
-    mtl['PRIORITY'] = mtl['PRIORITY_INIT']
     mtl['TARGET_STATE'] = "UNOBS"
     # ADM add the time and version of the desitarget code that was run.
     utc = datetime.utcnow().isoformat(timespec='seconds')

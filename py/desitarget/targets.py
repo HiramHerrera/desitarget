@@ -17,6 +17,9 @@ from desitarget.targetmask import desi_mask, bgs_mask, mws_mask
 from desitarget.targetmask import scnd_mask, targetid_mask
 from desitarget.targetmask import obsconditions
 
+from desiutil.bitmask import BitMask
+from desitarget.targetmask import load_mask_bits
+
 # ADM set up the DESI default logger.
 from desiutil.log import get_logger
 log = get_logger()
@@ -520,7 +523,7 @@ def calc_numobs_more(targets, zcat, obscon):
     return numobs_more
 
 
-def calc_priority(targets, zcat, obscon, state=False):
+def calc_priority(targets, zcat, obscon, state=False, priorities_file=None):
     """
     Calculate target priorities from masks, observation/redshift status.
 
@@ -570,6 +573,17 @@ def calc_priority(targets, zcat, obscon, state=False):
         desi_mask, bgs_mask, mws_mask, scnd_mask = masks
     else:
         cmx_mask = masks[0]
+        
+    if priorities_file is not None: #Redefine masks with priorities file
+        _bitdefs = load_mask_bits(yamlpath=priorities_file)
+        try:
+            desi_mask = BitMask('desi_mask', _bitdefs)
+            mws_mask = BitMask('mws_mask', _bitdefs)
+            bgs_mask = BitMask('bgs_mask', _bitdefs)
+        except TypeError:
+            desi_mask = object()
+            mws_mask = object()
+            bgs_mask = object()
 
     # Default is 0 priority, i.e. do not observe.
     priority = np.zeros(len(targets), dtype='i8')
