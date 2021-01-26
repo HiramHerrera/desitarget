@@ -2,9 +2,154 @@
 desitarget Change Log
 =====================
 
-0.42.1 (unreleased)
+0.49.1 (unreleased)
 -------------------
 
+* Updates to MWS main survey target cuts [`PR #672`_]. Includes:
+  * Add bright limit to MWS_NEARBY
+  * Add MWS_BHB as main survey class
+
+.. _`PR #672`: https://github.com/desihub/desitarget/pull/672
+
+
+0.49.0 (2020-01-18)
+-------------------
+
+* General clean-up for final DR9 imaging [`PR #670`_]. Includes:
+    * Debug primary-secondary cross-matching:
+        * remove duplicate secondaries that match two primaries...
+        * ...NOT duplicate primaries that match two secondaries.
+    * Catch if no Gaia sources are found when making Gaia-only standards.
+    * Shift Gaia-based morphological cuts to a single function.
+    * Add or update wiki versions referenced in doc strings.
+    * Change cuts for bright, Main Survey standards to G > 16.
+    * Debug and streamline "outside-of-the-footprint" randoms.
+    * Read the actual RELEASE number for randoms from file headers.
+        * Rather than assuming a single, canonical North/South RELEASE.
+    * Add new WD_BINARIES secondary program that is split by DARK/BRIGHT.
+
+.. _`PR #670`: https://github.com/desihub/desitarget/pull/670
+
+0.48.0 (2020-01-09)
+-------------------
+
+* First run of secondaries with real target files [`PR #669`_]. Includes:
+    * Add Gaia-only standard stars to the MWS masks for SV, Main Survey:
+        * `GAIA_STD_FAINT`, `GAIA_STD_BRIGHT`, `GAIA_STD_WD`.
+    * General optimization, updating and debugging of the secondary code.
+    * Get `TARGETIDs` from the input sweeps, not just the actual targets.
+    * Add the first full bitmask for the SV1 secondary target files.
+    * Updates to the data model to better reflect the primary targets.
+* Clean-up minor style and doc issues from `PR #636`_ [`PR #668`_].
+* Updates and bug fixes for DR9 now SV is on-sky [`PR #665`_]. Includes:
+    * Pass `MASKBITS` column forward for GFAs.
+    * Bug fixes necessitated by target files having a second extension.
+        * Notably, not all shasums were checked in North/South overlaps.
+    * Some minor additional functionality for creating randoms.
+    * Clean-up code style and syntax errors introduced in `PR #664`_.
+* Tutorial (and initial code) to train DR9 Random Forests [`PR #664`_].
+* Simplify stellar SV bits [`PR #636`_]:
+    * Secondary bit requirement for main stellar SV program to 4 bits.
+    * Primary bright science WDs use the old algorithmic selection.
+
+.. _`PR #636`: https://github.com/desihub/desitarget/pull/636
+.. _`PR #664`: https://github.com/desihub/desitarget/pull/664
+.. _`PR #665`: https://github.com/desihub/desitarget/pull/665
+.. _`PR #668`: https://github.com/desihub/desitarget/pull/668
+.. _`PR #669`: https://github.com/desihub/desitarget/pull/669
+
+0.47.0 (2020-12-10)
+-------------------
+
+* Update the gr_blue ELG cut for DR9 imaging for SV [`PR #663`_]:
+
+.. _`PR #663`: https://github.com/desihub/desitarget/pull/663
+
+0.46.0 (2020-12-10)
+-------------------
+
+* Update ELG cuts for DR9 imaging for SV and Main Survey [`PR #662`_].
+* Retune LRG cuts for DR9 and update the LRG SV target bits [`PR #661`_]:
+    * Only use the default `BRIGHT`, `GALAXY` and `CLUSTER` masks.
+        * i.e. ignore `ALLMASK` and `MEDIUM`.
+    * Increase the SV faint limits from z < 20.5 to z < 21.0.
+    * Increase the SV faint limits from zfiber < 21.9 to zfiber < 22.0.
+* `PR #660`_: Work completed in `PR #661`_.
+* Two main changes for BGS SV selection for DR9 [`PR #659`_]:
+    * Remove FRACS* cuts, except for LOWQ superset.
+    * Limit FIBMAG superset to r < 20.5 instead of r < 21.0.
+* General clean-ups and speed-ups for DR9 work [`PR #658`_]. Includes:
+    * Corrected data model when repartitioning skies into HEALPixels.
+    * Faster versions of all of the `read_targets_in_X` functions:
+        * e.g., `in_box`, `in_cap`, `in_tiles`, `in_hp`.
+        * less general, but run faster by assuming the data model.
+        * Speed-up is 10x or more for files pixelized at higher nsides.
+    * Read "standard" `MASKBITS` cuts automatically for pixweight files.
+    * Catch if MTL ledgers are at a lower resolution that target files.
+* Extension of mag limit to 22.3 for RF selection [`PR #655`_].
+* Add input sweep files and their checksums to target files [`PR #641`_].
+    * Addresses `issue #20`_.
+    
+.. _`issue #20`: https://github.com/desihub/desitarget/issues/20
+.. _`PR #641`: https://github.com/desihub/desitarget/pull/641
+.. _`PR #655`: https://github.com/desihub/desitarget/pull/655
+.. _`PR #658`: https://github.com/desihub/desitarget/pull/658
+.. _`PR #659`: https://github.com/desihub/desitarget/pull/659
+.. _`PR #660`: https://github.com/desihub/desitarget/pull/660
+.. _`PR #661`: https://github.com/desihub/desitarget/pull/661
+.. _`PR #662`: https://github.com/desihub/desitarget/pull/662
+
+0.45.1 (2020-11-22)
+-------------------
+
+* Add RA/Dec to the Main Survey calls for the QSO RF in cmx [`PR #654`_].
+
+.. _`PR #654`: https://github.com/desihub/desitarget/pull/654
+
+0.45.0 (2020-11-22)
+-------------------
+
+* Clean-up for DR9-based commissioning [`PR #653`_]. Includes:
+    * Use HEALPixels instead of ``BRICKIDs`` for supp_skies.
+        * This avoids duplicated ``TARGETIDs`` where bricks span pixels.
+        * Addresses `issue #647`_.
+    * G < 19 for ``STD_DITHER_GAIA`` cmx targets near the Galaxy.
+    * Allow ``gather_targets`` to restrict to a subset of columns.
+    * Ignore new "light-curve" and "extra" flavors when finding sweeps.
+    * Smarter processing of randoms when writing "bundled" slurm file.
+        * Split pixelized files into N smaller files first...
+        * ...then combine across pixels to make N random catalogs.
+        * Never requires memory to write a very large random catalog.
+* Tune the RF selection for QSOs in SV using DR9 imaging [`PR #652`_].
+* Add RF files and threshold for each DR9 sub-footprint [`PR #648`_].
+
+.. _`issue #647`: https://github.com/desihub/desitarget/issues/647
+.. _`PR #648`: https://github.com/desihub/desitarget/pull/648
+.. _`PR #652`: https://github.com/desihub/desitarget/pull/652
+.. _`PR #653`: https://github.com/desihub/desitarget/pull/653
+
+0.44.0 (2020-11-12)
+-------------------
+
+* Clean-up targets and randoms for the internal DR9 release [`PR #649`_]:
+    * Add function :func:`geomask.imaging_mask()`:
+        * Allows easier parsing of maskbits by string ("BRIGHT", etc.)
+        * Establishes a default set of cuts on maskbits.
+    * New executable ``alt_split_randoms`` (slower but saves memory).
+    * Flexibility when adding MTL columns to randoms, to save memory:
+        * MTL columns can still be added when running the randoms.
+	* Or, can now be added when splitting a larger random catalog.
+* Add notebook demonstrating ledgers [`PR #642`_].
+
+.. _`PR #642`: https://github.com/desihub/desitarget/pull/642
+.. _`PR #649`: https://github.com/desihub/desitarget/pull/649
+
+0.43.0 (2020-10-27)
+-------------------
+
+* Add the ``STD_DITHER_GAIA`` target class for CMX [`PR #644`_].
+    * For dither tests outside the Legacy Surveys footprint.
+* Tune shifts between southern and northern imaging for DR9 [`PR #643`_].
 * Update Travis for Py3.8/Astropy 4.x (fixes `issue #639`_) [`PR #640`_].
     * Also adds a useful script for recovering the QSO RF probabilities.
 * Add units to all output files (addresses `issue #356`_) [`PR #638`_]:
@@ -17,6 +162,8 @@ desitarget Change Log
 .. _`issue #639`: https://github.com/desihub/desitarget/issues/639
 .. _`PR #638`: https://github.com/desihub/desitarget/pull/638
 .. _`PR #640`: https://github.com/desihub/desitarget/pull/640
+.. _`PR #643`: https://github.com/desihub/desitarget/pull/643
+.. _`PR #644`: https://github.com/desihub/desitarget/pull/644
 
 0.42.0 (2020-08-17)
 -------------------

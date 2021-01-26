@@ -5,11 +5,11 @@ sv1_desi_mask:
     - [QSO,         2, "QSO", {obsconditions: DARK}]
 
     #- ADM LRG sub-classes
-    - [LRG_INIT_4PASS,  3, "Bright LRG using initial optical and IR cuts",               {obsconditions: DARK}]
-    - [LRG_SUPER_4PASS, 4, "Bright LRG that is a superset of other cuts",                {obsconditions: DARK}]
-    - [LRG_INIT_8PASS,  5, "Faint LRG using initial optical and IR cuts",                {obsconditions: DARK}]
-    - [LRG_SUPER_8PASS, 6, "Faint LRG that is a superset of other cuts",                 {obsconditions: DARK}]
-    - [LOWZ_FILLER,     7, "LRG-like low-z filler sample (will NOT also have LRG set)",  {obsconditions: DARK}]
+    - [LRG_OPT,     3, "LRG from baseline version of optical cuts",             {obsconditions: DARK}]
+    - [LRG_IR,      4, "LRG from baseline version of IR cuts",                  {obsconditions: DARK}]
+    - [LRG_SV_OPT,  5, "LRG from relaxed version of optical cuts",              {obsconditions: DARK}]
+    - [LRG_SV_IR,   6, "LRG from relaxed version of IR cuts",                   {obsconditions: DARK}]
+    - [LOWZ_FILLER, 7, "LRG-like low-z filler sample (NOT used for SV1)",  {obsconditions: DARK}]
 
     #- ADM ELG sub-classes
     - [ELG_SV_GTOT,        8, "ELG from relaxed version of FDR cuts and g-limit",        {obsconditions: DARK|GRAY}]
@@ -26,17 +26,17 @@ sv1_desi_mask:
     - [QSO_Z5,            17, "z~5 QSO",                                      {obsconditions: DARK}]
 
     #- North vs. South selections for different sub-classes
-    - [LRG_INIT_4PASS_NORTH,   18, "Bright LRG using initial optical and IR cuts tuned for Bok/Mosaic", {obsconditions: DARK}]
-    - [LRG_SUPER_4PASS_NORTH,  19, "Bright LRG that is a superset of other cuts tuned for Bok/Mosaic",  {obsconditions: DARK}]
-    - [LRG_INIT_8PASS_NORTH,   20, "Faint LRG using initial optical and IR cuts tuned for Bok/Mosaic",  {obsconditions: DARK}]
-    - [LRG_SUPER_8PASS_NORTH,  21, "Faint LRG that is a superset of other cuts tuned for Bok/Mosaic",   {obsconditions: DARK}]
-    - [LOWZ_FILLER_NORTH,      22, "LRG-like low-z filler sample tuned for Bok/Mosaic",                 {obsconditions: DARK}]
+    - [LRG_OPT_NORTH,     18, "LRG from baseline version of optical cuts tuned for Bok/Mosaic",       {obsconditions: DARK}]
+    - [LRG_IR_NORTH,      19, "LRG from baseline version of IR cuts tuned for Bok/Mosaic",            {obsconditions: DARK}]
+    - [LRG_SV_OPT_NORTH,  20, "LRG from relaxed version of optical cuts tuned for Bok/Mosaic",        {obsconditions: DARK}]
+    - [LRG_SV_IR_NORTH,   21, "LRG from relaxed version of IR cuts tuned for Bok/Mosaic",             {obsconditions: DARK}]
+    - [LOWZ_FILLER_NORTH, 22, "LRG-like low-z filler sample tuned for Bok/Mosaic (NOT used for SV1)", {obsconditions: DARK}]
 
-    - [LRG_INIT_4PASS_SOUTH,   23, "Bright LRG using initial optical and IR cuts tuned for DECam", {obsconditions: DARK}]
-    - [LRG_SUPER_4PASS_SOUTH,  24, "Bright LRG that is a superset of other cuts tuned for DECam",  {obsconditions: DARK}]
-    - [LRG_INIT_8PASS_SOUTH,   25, "Faint LRG using initial optical and IR cuts tuned for DECam",  {obsconditions: DARK}]
-    - [LRG_SUPER_8PASS_SOUTH,  26, "Faint LRG that is a superset of other cuts tuned for DECam",   {obsconditions: DARK}]
-    - [LOWZ_FILLER_SOUTH,      27, "LRG-like low-z filler sample tuned for DECam",                 {obsconditions: DARK}]
+    - [LRG_OPT_SOUTH,     23, "LRG from baseline version of optical cuts tuned for DECam",       {obsconditions: DARK}]
+    - [LRG_IR_SOUTH,      24, "LRG from baseline version of IR cuts tuned for DECam",            {obsconditions: DARK}]
+    - [LRG_SV_OPT_SOUTH,  25, "LRG from relaxed version of optical cuts tuned for DECam",        {obsconditions: DARK}]
+    - [LRG_SV_IR_SOUTH,   26, "LRG from relaxed version of IR cuts tuned for DECam",             {obsconditions: DARK}]
+    - [LOWZ_FILLER_SOUTH, 27, "LRG-like low-z filler sample tuned for DECam (NOT used for SV1)", {obsconditions: DARK}]
 
     - [ELG_SV_GTOT_NORTH,      28, "ELG from relaxed version of FDR cuts and g-limit for Bok/Mosaic",        {obsconditions: DARK|GRAY}]
     - [ELG_SV_GFIB_NORTH,      29, "ELG from relaxed version of FDR cuts and g-fiber-limit for Bok/Mosaic",  {obsconditions: DARK|GRAY}]
@@ -123,16 +123,23 @@ sv1_bgs_mask:
 sv1_mws_mask:
     #- Bits 0-3 (7 ids)
     - [MWS_MAIN_BROAD,            0, "Milky Way Survey magnitude limited bulk sample",         {obsconditions: BRIGHT|GRAY|DARK}]
+    - [MWS_WD,                    1, "Milky Way Survey White Dwarf (algorithmic selection)",   {obsconditions: BRIGHT|GRAY|DARK}]
     - [MWS_NEARBY,                2, "Milky Way Survey volume-complete ~100pc sample",         {obsconditions: BRIGHT|GRAY|DARK}]
 
     #- 4: MWS_MAIN north/south splits
     - [MWS_MAIN_BROAD_NORTH,      4, "Milky Way Survey targets from Bok/Mosaic",               {obsconditions: BRIGHT|GRAY|DARK}]
     - [MWS_MAIN_BROAD_SOUTH,      5, "Milky Way Survey targets from DECam",                    {obsconditions: BRIGHT|GRAY|DARK}]
+    - [MWS_BHB,                   6, "Milky Way Survey BHBs",                                  {obsconditions: BRIGHT|GRAY|DARK}]
 
     # Fainter MWS_MAIN extension for SV, selected on magnitude only
     - [MWS_MAIN_FAINT,           14, "MWS magnitude limited sample from DECam", {obsconditions: BRIGHT|GRAY|DARK}]
     - [MWS_MAIN_FAINT_NORTH,     15, "MWS magnitude limited sample from DECam", {obsconditions: BRIGHT|GRAY|DARK}]
     - [MWS_MAIN_FAINT_SOUTH,     16, "MWS magnitude limited sample from DECam", {obsconditions: BRIGHT|GRAY|DARK}]
+
+    # ADM Standard stars based only on Gaia.
+    - [GAIA_STD_FAINT,      33, "Standard stars for dark/gray conditions",   {obsconditions: DARK|GRAY}]
+    - [GAIA_STD_WD,         34, "White Dwarf stars",                         {obsconditions: DARK|GRAY|BRIGHT}]
+    - [GAIA_STD_BRIGHT,     35, "Standard stars for BRIGHT conditions",      {obsconditions: BRIGHT}]
 
     # ADM back-up targets for poor conditions.
     - [BACKUP_BRIGHT,       60, "Bright backup Gaia targets",        {obsconditions: DARK|GRAY|BRIGHT|POOR|TWILIGHT12|TWILIGHT18}]
@@ -142,66 +149,57 @@ sv1_mws_mask:
 #- ADM SV secondary survey targets bit mask.
 #- ADM note that the 'filenames', here, should all be present in the
 #- ADM directory that corresponds to the $SECONDARY_DIR/sv1 environment
-#- ADM variable, e.g. $SECONDARY_DIR/sv1/veto.fits for VETO targets.
+#- ADM variable, e.g. $SECONDARY_DIR/sv1/veto.txt for VETO targets.
 sv1_scnd_mask:
-    - [VETO,        0, "Never observe, even if a primary target bit is set",
-       {obsconditions: DARK|GRAY|BRIGHT|POOR|TWILIGHT12|TWILIGHT18, filename: 'veto'}]
-    - [DR14Q,       1, "Known quasars from the SDSS DR14Q catalog",
-       {obsconditions: DARK|GRAY|BRIGHT|POOR|TWILIGHT12|TWILIGHT18, filename: 'dr14q'}]
-    - [MWS_WD_SV,                10, "Milky Way Survey White Dwarf (SV cuts)",  
-        {obsconditions: BRIGHT|GRAY|DARK, filename: 'MWS_WD_SV'}]
-    - [MWS_SPECIAL_DWARF_SV,     11, "Likely dwarf galaxy members (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_DWARF_SV'}]
-    - [MWS_SPECIAL_DDOGIANTS_SV, 12, "DDO-selected giants (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_DDOGIANTS_SV'}]
-    - [MWS_SPECIAL_WDBINARY_SV,  13, "White dwarf binaries (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_WDBINARY_SV'}]
-    - [MWS_SPECIAL_RRLYR_SV,     14, "RR Lyrae, Gaia-selected (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_RRLYR_SV'}]
-    - [MWS_SPECIAL_OC_SV,    15, "Likely open cluster members",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_OC_SV'}]
-    - [MWS_SPECIAL_GC_SV,        16, "Likely globular cluster members (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_GC_SV'}]
-    - [MWS_SPECIAL_BHB_SV,       17, "BHB candidates (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_BHB_SV'}]
-    - [MWS_SPECIAL_OC_FILLER_SV, 18, "Less likely open cluster members",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_OC_FILLER_SV'}]
-    - [MWS_SPECIAL_STREAM_SV,       19, "Likely stream members",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_STREAM_SV'}]
-    - [MWS_SPECIAL_CV_SV,  20, "CV candidates (SV cuts)",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_SPECIAL_CV_SV'}]
-    - [MWS_WD_SV_VERYBRIGHT,                21, "Milky Way Survey White Dwarf (SV cuts, very bright)",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_WD_VERYBRIGHT_SV'}]
-    - [MWS_SPECIAL_DDOGIANTS_VERYBRIGHT_SV, 22, "DDO-selected giants (SV cuts, very bright)",    
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_SPECIAL_DDOGIANTS_VERYBRIGHT_SV'}]
-    - [MWS_SPECIAL_OC_VERYBRIGHT_SV,    25, "Likely open cluster members (very bright)",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_SPECIAL_OC_VERYBRIGHT_SV'}]
-    - [MWS_SPECIAL_GC_VERYBRIGHT_SV,        26, "Likely globular cluster members (very bright)",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_SPECIAL_GC_VERYBRIGHT_SV'}]
-    - [MWS_SPECIAL_OC_FILLER_VERYBRIGHT_SV, 28, "Less likely open cluster members (very bright)",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_SPECIAL_OC_FILLER_VERYBRIGHT_SV'}]
-    - [MWS_SPECIAL_STREAM_VERYBRIGHT_SV,       29, "Likely stream members (very bright)",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_SPECIAL_STREAM_VERYBRIGHT_SV'}]
-    - [MWS_CALIB_APOGEE,                    30, "Stars 16 < G < 19 with APOGEE data",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB_APOGEE'}]
-    - [MWS_CALIB_APOGEE_VERYBRIGHT,         31, "Stars  9 < G < 16 with APOGEE data",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_CALIB_APOGEE_VERYBRIGHT'}]
-    - [MWS_CALIB_GAIAESO,                   32, "Stars 16 < G < 19 with GAIAESO data",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB_GAIAESO'}]
-    - [MWS_CALIB_GAIAESO_VERYBRIGHT,        33, "Stars  9 < G < 16 with GAIAESO data",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_CALIB_GAIAESO_VERYBRIGHT'}]
-    - [MWS_CALIB_SEGUE,                     34, "Stars 16 < G < 19 with SEGUE data",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB_SEGUE'}]
-    - [MWS_CALIB_SEGUE_VERYBRIGHT,          35, "Stars  9 < G < 16 with SEGUE data",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_CALIB_SEGUE_VERYBRIGHT'}]
-    - [MWS_CALIB_GALAH,                     36, "Stars 16 < G < 19 with GALAH data",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB_GALAH'}]
-    - [MWS_CALIB_GALAH_VERYBRIGHT,          37, "Stars  9 < G < 16 with GALAH data",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_CALIB_GALAH_VERYBRIGHT'}]
-    - [MWS_CALIB_BOSS,                      38, "Stars 16 < G < 19 with BOSS data",
-       {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB_BOSS'}]
-    - [MWS_CALIB_BOSS_VERYBRIGHT,           39, "Stars  9 < G < 16 with BOSS data",
-       {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'MWS_CALIB_BOSS_VERYBRIGHT'}]
+    - [VETO,                 0, "Never observe, even if a primary target bit is set",
+        {obsconditions: DARK|GRAY|BRIGHT|POOR|TWILIGHT12|TWILIGHT18, filename: 'veto'}]
+    - [UDG,                  1, "See $SCND_DIR/sv1/docs/UDG.txt",                {obsconditions: DARK,        filename: 'UDG'}]
+    - [FIRST_MALS,           2, "See $SCND_DIR/sv1/docs/FIRST_MALS.txt",         {obsconditions: DARK,        filename: 'FIRST_MALS'}]
+# ADM the WD_BINARIES class was part of 0.48.0 but was then deprecated in favor of WD_BINARIES_DARK and WD_BINARIES_BRIGHT.
+#   - [WD_BINARIES,          3, "See $SCND_DIR/sv1/docs/WD_BINARIES.txt",        {obsconditions: BRIGHT|DARK, filename: 'WD_BINARIES'}]
+    - [LBG_TOMOG,            4, "See $SCND_DIR/sv1/docs/LBG_TOMOG.txt",          {obsconditions: DARK,        filename: 'LBG_TOMOG'}]
+    - [QSO_RED,              5, "See $SCND_DIR/sv1/docs/QSO_RED.ipynb",          {obsconditions: DARK,        filename: 'QSO_RED'}]
+    - [M31_KNOWN,            6, "See $SCND_DIR/sv1/docs/M31_KNOWN.txt",          {obsconditions: DARK,        filename: 'M31_KNOWN'}]
+    - [M31_QSO,              7, "See $SCND_DIR/sv1/docs/M31_QSO.txt.",           {obsconditions: DARK,        filename: 'M31_QSO'}]
+    - [M31_STAR,             8, "See $SCND_DIR/sv1/docs/M31_STAR.txt",           {obsconditions: DARK,        filename: 'M31_STAR'}]
+#   - [MWS_DDOGIANTS,        9, "See $SCND_DIR",                        {obsconditions: BRIGHT,      filename: 'MWS_DDOGIANTS'}]
+    - [MWS_CLUS_GAL_DEEP,   10, "See $SCND_DIR/sv1/docs/MWS_CLUS_GAL_DEEP.txt",  {obsconditions: DARK,        filename: 'MWS_CLUS_GAL_DEEP'}]
+    - [LOW_MASS_AGN,        11, "See $SCND_DIR/sv1/docs/LOW_MASS_AGN.txt",       {obsconditions: DARK,        filename: 'LOW_MASS_AGN'}]
+    - [FAINT_HPM,           12, "See $SCND_DIR/sv1/docs/FAINT_HPM.txt",          {obsconditions: DARK,        filename: 'FAINT_HPM'}]
+    - [GW190412,            13, "See $SCND_DIR/sv1/docs/GW190412.ipynb",         {obsconditions: BRIGHT|DARK, filename: 'GW190412'}]
+    - [IC134191,            14, "See $SCND_DIR/sv1/docs/IC134191.ipynb",         {obsconditions: BRIGHT|DARK, filename: 'IC134191'}]
+    - [PV_BRIGHT,           15, "See $SCND_DIR/sv1/docs/PV_BRIGHT.ipynb",        {obsconditions: BRIGHT,      filename: 'PV_BRIGHT'}]
+    - [PV_DARK,             16, "See $SCND_DIR/sv1/docs/PV_DARK.ipynb",          {obsconditions: DARK,        filename: 'PV_DARK'}]
+    - [LOW_Z,               17, "See $SCND_DIR/sv1/docs/LOW_Z.ipynb",            {obsconditions: DARK,        filename: 'LOW_Z'}]
+    - [BHB,                 18, "See $SCND_DIR/sv1/docs/BHB.txt",                {obsconditions: DARK,        filename: 'BHB'}]
+    - [SPCV,                19, "See $SCND_DIR/sv1/docs/SPCV.txt",               {obsconditions: DARK,        filename: 'SPCV'}]
+    - [DC3R2_GAMA,          20, "See $SCND_DIR/sv1/docs/DC3R2_GAMA.ipynb",       {obsconditions: DARK,        filename: 'DC3R2_GAMA'}]
+    - [UNWISE_BLUE,         21, "See $SCND_DIR/sv1/docs/UNWISE_BLUE.txt",        {obsconditions: DARK,        filename: 'UNWISE_BLUE'}]
+    - [UNWISE_GREEN,        22, "See $SCND_DIR/sv1/docs/UNWISE_GREEN.txt",       {obsconditions: DARK,        filename: 'UNWISE_GREEN'}]
+    - [HETDEX_MAIN,         23, "See $SCND_DIR/sv1/docs/HETDEX_MAIN.txt",        {obsconditions: DARK,        filename: 'HETDEX_MAIN'}]
+    - [HETDEX_HP,           24, "See $SCND_DIR/sv1/docs/HETDEX_HP.txt",          {obsconditions: DARK,        filename: 'HETDEX_HP'}]
+#   - [PSF_OUT_BRIGHT,      25, "See $SCND_DIR",                        {obsconditions: BRIGHT,      filename: 'PSF_OUT_BRIGHT'}]
+#   - [PSF_OUT_DARK,        26, "See $SCND_DIR",                        {obsconditions: DARK,        filename: 'PSF_OUT_DARK'}]
+    - [HPM_SOUM,            27, "See $SCND_DIR/sv1/docs/HPM_SOUM.txt",           {obsconditions: DARK,        filename: 'HPM_SOUM'}]
+    - [SN_HOSTS,            28, "See $SCND_DIR/sv1/docs/SN_HOSTS.txt",           {obsconditions: DARK,        filename: 'SN_HOSTS'}]
+    - [GAL_CLUS_BCG,        29, "See $SCND_DIR/sv1/docs/GAL_CLUS_BCG.txt",       {obsconditions: DARK,        filename: 'GAL_CLUS_BCG'}]
+    - [GAL_CLUS_2ND,        30, "See $SCND_DIR/sv1/docs/GAL_CLUS_2ND.txt",       {obsconditions: DARK,        filename: 'GAL_CLUS_2ND'}]
+    - [GAL_CLUS_SAT,        31, "See $SCND_DIR/sv1/docs/GAL_CLUS_SAT.txt",       {obsconditions: DARK,        filename: 'GAL_CLUS_SAT'}]
+    - [HSC_HIZ_SNE,         32, "See $SCND_DIR/sv1/docs/HSC_HIZ_SNE.txt",        {obsconditions: DARK,        filename: 'HSC_HIZ_SNE'}]
+    - [ISM_CGM_QGP,         33, "See $SCND_DIR/sv1/docs/ISM_CGM_QGP.txt",        {obsconditions: DARK,        filename: 'ISM_CGM_QGP'}]
+    - [STRONG_LENS,         34, "See $SCND_DIR/sv1/docs/STRONG_LENS.txt",        {obsconditions: DARK,        filename: 'STRONG_LENS'}]
+    - [WISE_VAR_QSO,        35, "See $SCND_DIR/sv1/docs/WISE_VAR_QSO.txt",       {obsconditions: DARK,        filename: 'WISE_VAR_QSO'}]
+    - [MWS_CALIB,           36, "Stars with APOGEE/BOSS/GALAH/GAIAESO spectra",
+        {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_CALIB'}]
+    - [BACKUP_CALIB,        37, "Very bright stars with APOGEE/BOSS/GALAH/GAIAESO spectra",
+        {obsconditions: POOR|TWILIGHT12|TWILIGHT18, filename: 'BACKUP_CALIB'}]
+    - [MWS_MAIN_CLUSTER_SV, 38, "Main survey low mass and metal poor stars (OC/GC/dwarf/stream members)",
+        {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_MAIN_CLUSTER_SV'}]
+    - [MWS_RRLYR,           39, "Main survey halo tracers (RR Lyrae)",
+        {obsconditions: DARK|GRAY|BRIGHT, filename: 'MWS_RRLYR'}]
+    - [BRIGHT_HPM,          40, "See $SCND_DIR/sv1/docs/BRIGHT_HPM.txt",         {obsconditions: BRIGHT,      filename: 'BRIGHT_HPM'}]
+    - [WD_BINARIES_BRIGHT,  41, "See $SCND_DIR/sv1/docs/WD_BINARIES_BRIGHT.txt", {obsconditions: BRIGHT,      filename: 'WD_BINARIES_BRIGHT'}]
+    - [WD_BINARIES_DARK,    42, "See $SCND_DIR/sv1/docs/WD_BINARIES_DARK.txt",   {obsconditions: DARK,        filename: 'WD_BINARIES_DARK'}]
 
 #- Observation State
 #- if a target passes more than one target bit, it is possible that one bit
@@ -232,10 +230,10 @@ priorities:
         ELG: {UNOBS: 3000, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
         LRG: {UNOBS: 3200, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
         QSO: {UNOBS: 3400, MORE_ZGOOD: 3350, MORE_ZWARN: 3300, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
-        LRG_INIT_4PASS: SAME_AS_LRG
-        LRG_SUPER_4PASS: SAME_AS_LRG
-        LRG_INIT_8PASS: SAME_AS_LRG
-        LRG_SUPER_8PASS: SAME_AS_LRG
+        LRG_OPT: SAME_AS_LRG
+        LRG_IR: SAME_AS_LRG
+        LRG_SV_OPT: SAME_AS_LRG
+        LRG_SV_IR: SAME_AS_LRG
         LOWZ_FILLER: {UNOBS: 10, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
         ELG_SV_GTOT: SAME_AS_ELG
         ELG_SV_GFIB: SAME_AS_ELG
@@ -248,36 +246,36 @@ priorities:
         QSO_HZ_F:        SAME_AS_QSO
         QSO_Z5:          SAME_AS_QSO
         # ADM don't prioritize a N/S target if it doesn't have other bits set
-        LRG_INIT_4PASS_NORTH: {UNOBS: 0, DONE: 0, OBS: 0, DONOTOBSERVE: 0}
-        LRG_SUPER_4PASS_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_INIT_8PASS_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_SUPER_8PASS_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LOWZ_FILLER_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_INIT_4PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_SUPER_4PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_INIT_8PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LRG_SUPER_8PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        LOWZ_FILLER_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_SV_GTOT_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_SV_GFIB_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_FDR_GTOT_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_FDR_GFIB_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_SV_GTOT_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_SV_GFIB_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_FDR_GTOT_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        ELG_FDR_GFIB_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_COLOR_4PASS_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_RF_4PASS_NORTH:    SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_COLOR_8PASS_NORTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_RF_8PASS_NORTH:    SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_HZ_F_NORTH:        SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_Z5_NORTH:          SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_COLOR_4PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_RF_4PASS_SOUTH:    SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_COLOR_8PASS_SOUTH: SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_RF_8PASS_SOUTH:    SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_HZ_F_SOUTH:        SAME_AS_LRG_INIT_4PASS_NORTH
-        QSO_Z5_SOUTH:          SAME_AS_LRG_INIT_4PASS_NORTH
+        LRG_OPT_NORTH: {UNOBS: 0, DONE: 0, OBS: 0, DONOTOBSERVE: 0}
+        LRG_IR_NORTH: SAME_AS_LRG_OPT_NORTH
+        LRG_SV_OPT_NORTH: SAME_AS_LRG_OPT_NORTH
+        LRG_SV_IR_NORTH: SAME_AS_LRG_OPT_NORTH
+        LOWZ_FILLER_NORTH: SAME_AS_LRG_OPT_NORTH
+        LRG_OPT_SOUTH: SAME_AS_LRG_OPT_NORTH
+        LRG_IR_SOUTH: SAME_AS_LRG_OPT_NORTH
+        LRG_SV_OPT_SOUTH: SAME_AS_LRG_OPT_NORTH
+        LRG_SV_IR_SOUTH: SAME_AS_LRG_OPT_NORTH
+        LOWZ_FILLER_SOUTH: SAME_AS_LRG_OPT_NORTH
+        ELG_SV_GTOT_NORTH: SAME_AS_LRG_OPT_NORTH
+        ELG_SV_GFIB_NORTH: SAME_AS_LRG_OPT_NORTH
+        ELG_FDR_GTOT_NORTH: SAME_AS_LRG_OPT_NORTH
+        ELG_FDR_GFIB_NORTH: SAME_AS_LRG_OPT_NORTH
+        ELG_SV_GTOT_SOUTH: SAME_AS_LRG_OPT_NORTH
+        ELG_SV_GFIB_SOUTH: SAME_AS_LRG_OPT_NORTH
+        ELG_FDR_GTOT_SOUTH: SAME_AS_LRG_OPT_NORTH
+        ELG_FDR_GFIB_SOUTH: SAME_AS_LRG_OPT_NORTH
+        QSO_COLOR_4PASS_NORTH: SAME_AS_LRG_OPT_NORTH
+        QSO_RF_4PASS_NORTH:    SAME_AS_LRG_OPT_NORTH
+        QSO_COLOR_8PASS_NORTH: SAME_AS_LRG_OPT_NORTH
+        QSO_RF_8PASS_NORTH:    SAME_AS_LRG_OPT_NORTH
+        QSO_HZ_F_NORTH:        SAME_AS_LRG_OPT_NORTH
+        QSO_Z5_NORTH:          SAME_AS_LRG_OPT_NORTH
+        QSO_COLOR_4PASS_SOUTH: SAME_AS_LRG_OPT_NORTH
+        QSO_RF_4PASS_SOUTH:    SAME_AS_LRG_OPT_NORTH
+        QSO_COLOR_8PASS_SOUTH: SAME_AS_LRG_OPT_NORTH
+        QSO_RF_8PASS_SOUTH:    SAME_AS_LRG_OPT_NORTH
+        QSO_HZ_F_SOUTH:        SAME_AS_LRG_OPT_NORTH
+        QSO_Z5_SOUTH:          SAME_AS_LRG_OPT_NORTH
         BAD_SKY: {UNOBS: 0, OBS: 0, DONE: 0, MORE_ZWARN: 0, MORE_ZGOOD: 0}
         #- Standards and sky are treated specially; priorities don't apply
         STD_FAINT:  -1
@@ -328,9 +326,10 @@ priorities:
     sv1_mws_mask:
         # Special/Sparse targets
         # NB DONE is not very relevant here since we assign "infinite" observations
-        # MWS_WD_SV:                     {UNOBS: 2996, DONE:  600, OBS: 1, DONOTOBSERVE: 0}
+        MWS_WD:                       {UNOBS: 2998, DONE:  600, OBS: 1, DONOTOBSERVE: 0}
         # Note NEARBY > OC (otherwise nearby targets swamped by fainter OC members)
         MWS_NEARBY:                   {UNOBS: 1650, DONE:  500, OBS: 1, DONOTOBSERVE: 0}
+        MWS_BHB:                      {UNOBS: 1450, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
 
         # Main survey targets 
         MWS_MAIN_BROAD:                  {UNOBS: 1100, DONE: 200, OBS: 1, DONOTOBSERVE: 0}
@@ -344,42 +343,56 @@ priorities:
         BACKUP_BRIGHT:                {UNOBS: 9, DONE: 9, OBS: 9, DONOTOBSERVE: 0}
         BACKUP_FAINT:                 {UNOBS: 8, DONE: 8, OBS: 8, DONOTOBSERVE: 0}
         BACKUP_VERY_FAINT:            {UNOBS: 7, DONE: 7, OBS: 7, DONOTOBSERVE: 0}
+        # ADM Standards are special; priorities don't apply.
+        GAIA_STD_FAINT:  -1
+        GAIA_STD_WD:  -1
+        GAIA_STD_BRIGHT:  -1
 
     # ADM secondary target priorities. Probably all have very low UNOBS
     sv1_scnd_mask:
-        VETO:                         {UNOBS:  0, DONE: 0, OBS: 0, DONOTOBSERVE: 0}
-        DR14Q:                        {UNOBS: 10, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
-        MWS_WD_SV:                    {UNOBS: 2996, DONE:  600, OBS: 1, DONOTOBSERVE: 0}
-        MWS_WD_SV_VERYBRIGHT:         SAME_AS_MWS_WD_SV
-        MWS_CALIB_APOGEE:             {UNOBS: 2995, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
-        MWS_CALIB_GAIAESO:            SAME_AS_MWS_CALIB_APOGEE
-        # Too many segue targets, tread them the same as MWS_MAIN_BROAD
-        MWS_CALIB_SEGUE:              {UNOBS: 1100, DONE: 200, OBS: 1, DONOTOBSERVE: 0}
-        MWS_CALIB_GALAH:              SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_BOSS:               SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_APOGEE_VERYBRIGHT:  SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_GAIAESO_VERYBRIGHT: SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_SEGUE_VERYBRIGHT:   SAME_AS_MWS_CALIB_SEGUE
-        MWS_CALIB_GALAH_VERYBRIGHT:   SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_BOSS_VERYBRIGHT:    SAME_AS_MWS_CALIB_APOGEE
-        # Note OC < NEARBY
-        MWS_SPECIAL_OC_SV:         {UNOBS: 1600, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
-        MWS_SPECIAL_OC_FILLER_SV:  {UNOBS: 1599, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
-        # Other SV special targets
-        MWS_SPECIAL_DWARF_SV:                {UNOBS: 1450, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
-        MWS_SPECIAL_DDOGIANTS_SV:            SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_WDBINARY_SV:             {UNOBS: 1450, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
-        MWS_SPECIAL_CV_SV:                   SAME_AS_MWS_SPECIAL_WDBINARY_SV
-        MWS_SPECIAL_RRLYR_SV:                SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_GC_SV:                   SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_BHB_SV:                  SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_STREAM_SV:                  SAME_AS_MWS_SPECIAL_DWARF_SV
-        # Backup time very bright special targets
-        MWS_SPECIAL_OC_VERYBRIGHT_SV:    SAME_AS_MWS_SPECIAL_OC_SV
-        MWS_SPECIAL_OC_FILLER_VERYBRIGHT_SV:    SAME_AS_MWS_SPECIAL_OC_FILLER_SV
-        MWS_SPECIAL_DDOGIANTS_VERYBRIGHT_SV: SAME_AS_MWS_SPECIAL_DDOGIANTS_SV
-        MWS_SPECIAL_GC_VERYBRIGHT_SV:        SAME_AS_MWS_SPECIAL_GC_SV
-        MWS_SPECIAL_STREAM_VERYBRIGHT_SV:       SAME_AS_MWS_SPECIAL_STREAM_SV
+        VETO:                  {UNOBS:  0, DONE: 0, OBS: 0, DONOTOBSERVE: 0}
+        UDG:                   {UNOBS: 1900, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        FIRST_MALS:            {UNOBS: 1025, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+#       WD_BINARIES:           {UNOBS: 1998, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        LBG_TOMOG:             {UNOBS: 1800, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        QSO_RED:               {UNOBS: 3400, MORE_ZGOOD: 3350, MORE_ZWARN: 3300, DONE: 2, OBS: 1, DONOTOBSERVE: 0}
+        M31_KNOWN:             SAME_AS_LBG_TOMOG
+        M31_QSO:               SAME_AS_LBG_TOMOG
+        M31_STAR:              SAME_AS_LBG_TOMOG
+#       MWS_DDOGIANTS:         {UNOBS: 1450, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        MWS_CLUS_GAL_DEEP:     {UNOBS: 4000, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        LOW_MASS_AGN:          {UNOBS: 1025, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        FAINT_HPM:             SAME_AS_LOW_MASS_AGN
+        GW190412:              {UNOBS: 5000, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        IC134191:              SAME_AS_GW190412
+        PV_BRIGHT:             {UNOBS: 100, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        PV_DARK:               {UNOBS: 100, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        LOW_Z:                 {UNOBS: 90, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        BHB:                   {UNOBS: 1950, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        SPCV:                  SAME_AS_LOW_MASS_AGN
+        DC3R2_GAMA:            SAME_AS_LOW_MASS_AGN
+        UNWISE_BLUE:           SAME_AS_LBG_TOMOG
+        UNWISE_GREEN:          SAME_AS_LBG_TOMOG
+        HETDEX_MAIN:           SAME_AS_LBG_TOMOG
+        HETDEX_HP:             SAME_AS_LBG_TOMOG
+#       PSF_OUT_BRIGHT:        {UNOBS: 70, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+#       PSF_OUT_DARK:          SAME_AS_PSF_OUT_BRIGHT
+        HPM_SOUM:              SAME_AS_LOW_MASS_AGN
+        SN_HOSTS:              SAME_AS_BHB
+        GAL_CLUS_BCG:          {UNOBS: 1025, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        GAL_CLUS_2ND:          {UNOBS: 1024, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        GAL_CLUS_SAT:          {UNOBS: 200,  DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        HSC_HIZ_SNE:           SAME_AS_LBG_TOMOG
+        ISM_CGM_QGP:           {UNOBS: 4000, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        STRONG_LENS:           SAME_AS_UDG
+        WISE_VAR_QSO:          SAME_AS_QSO_RED
+        MWS_CALIB:             {UNOBS: 2995, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        BACKUP_CALIB:          SAME_AS_MWS_CALIB
+        MWS_MAIN_CLUSTER_SV:   {UNOBS: 1450, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
+        MWS_RRLYR:             {UNOBS: 1450, DONE:  400, OBS: 1, DONOTOBSERVE: 0}
+        BRIGHT_HPM:            SAME_AS_LOW_MASS_AGN
+        WD_BINARIES_BRIGHT:    {UNOBS: 1998, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
+        WD_BINARIES_DARK:      {UNOBS: 1998, DONE:    2, OBS: 1, DONOTOBSERVE: 0}
 
 # ADM INITIAL number of observations (NUMOBS) for each target bit
 # ADM SAME_AS_XXX means to use the NUMOBS for bitname XXX
@@ -390,10 +403,10 @@ numobs:
         ELG: 1
         LRG: 2
         QSO: 4
-        LRG_INIT_4PASS: 4
-        LRG_SUPER_4PASS: 4
-        LRG_INIT_8PASS: 8
-        LRG_SUPER_8PASS: 8
+        LRG_OPT: 4
+        LRG_IR: 4
+        LRG_SV_OPT: 4
+        LRG_SV_IR: 4
         LOWZ_FILLER: 1
         ELG_SV_GTOT: SAME_AS_ELG
         ELG_SV_GFIB: SAME_AS_ELG
@@ -406,15 +419,15 @@ numobs:
         QSO_HZ_F:        SAME_AS_QSO
         QSO_Z5:          SAME_AS_QSO
         # ADM don't observe a N/S target if it doesn't have other bits set
-        LRG_INIT_4PASS_NORTH:  0
-        LRG_SUPER_4PASS_NORTH: 0
-        LRG_INIT_8PASS_NORTH:  0
-        LRG_SUPER_8PASS_NORTH: 0
+        LRG_OPT_NORTH:  0
+        LRG_IR_NORTH: 0
+        LRG_SV_OPT_NORTH:  0
+        LRG_SV_IR_NORTH: 0
         LOWZ_FILLER_NORTH: 0
-        LRG_INIT_4PASS_SOUTH:  0
-        LRG_SUPER_4PASS_SOUTH: 0
-        LRG_INIT_8PASS_SOUTH:  0
-        LRG_SUPER_8PASS_SOUTH: 0
+        LRG_OPT_SOUTH:  0
+        LRG_IR_SOUTH: 0
+        LRG_SV_OPT_SOUTH:  0
+        LRG_SV_IR_SOUTH: 0
         LOWZ_FILLER_SOUTH: 0
         ELG_SV_GTOT_NORTH: 0
         ELG_SV_GFIB_NORTH: 0
@@ -484,6 +497,8 @@ numobs:
         MWS_MAIN_BROAD:               1
         MWS_MAIN_FAINT:               1
         MWS_NEARBY:                 100
+        MWS_WD:                     100
+        MWS_BHB:                    100
         # ADM don't observe a N/S target if it doesn't have other bits set
         MWS_MAIN_BROAD_NORTH:            0
         MWS_MAIN_BROAD_SOUTH:            0
@@ -492,36 +507,53 @@ numobs:
         BACKUP_BRIGHT:                1
         BACKUP_FAINT:                 SAME_AS_BACKUP_BRIGHT
         BACKUP_VERY_FAINT:            SAME_AS_BACKUP_BRIGHT
+        # ADM Standards are special; numobs doesn't apply.
+        GAIA_STD_FAINT:  -1
+        GAIA_STD_WD:  -1
+        GAIA_STD_BRIGHT:  -1
 
     # ADM initial number of observations for secondary targets
     sv1_scnd_mask:
-        VETO: 1
-        DR14Q: 1
-        MWS_WD_SV:                       100
-        MWS_WD_SV_VERYBRIGHT:            SAME_AS_MWS_WD_SV
-        MWS_CALIB_APOGEE:                100
-        MWS_CALIB_GAIAESO:               SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_SEGUE:                 1
-        MWS_CALIB_GALAH:                 SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_BOSS:                  SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_APOGEE_VERYBRIGHT:     SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_GAIAESO_VERYBRIGHT:    SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_SEGUE_VERYBRIGHT:      SAME_AS_MWS_CALIB_SEGUE
-        MWS_CALIB_GALAH_VERYBRIGHT:      SAME_AS_MWS_CALIB_APOGEE
-        MWS_CALIB_BOSS_VERYBRIGHT:       SAME_AS_MWS_CALIB_APOGEE
-        MWS_SPECIAL_DWARF_SV:            1
-        MWS_SPECIAL_DDOGIANTS_SV:        SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_WDBINARY_SV:         100
-        MWS_SPECIAL_CV_SV:               100
-        MWS_SPECIAL_RRLYR_SV:            SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_OC_SV:           100
-        MWS_SPECIAL_OC_FILLER_SV:    1
-        MWS_SPECIAL_GC_SV:               SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_BHB_SV:              SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_STREAM_SV:              SAME_AS_MWS_SPECIAL_DWARF_SV
-        MWS_SPECIAL_OC_VERYBRIGHT_SV:        SAME_AS_MWS_SPECIAL_OC_SV
-        MWS_SPECIAL_OC_FILLER_VERYBRIGHT_SV:        SAME_AS_MWS_SPECIAL_OC_FILLER_SV
-        MWS_SPECIAL_DDOGIANTS_VERYBRIGHT_SV:     SAME_AS_MWS_SPECIAL_DDOGIANTS_SV
-        MWS_SPECIAL_GC_VERYBRIGHT_SV:            SAME_AS_MWS_SPECIAL_GC_SV
-        MWS_SPECIAL_STREAM_VERYBRIGHT_SV:           SAME_AS_MWS_SPECIAL_STREAM_SV
-
+        VETO:                     1
+        UDG:                    100
+        FIRST_MALS:             100
+#       WD_BINARIES:            100
+        LBG_TOMOG:              100
+        QSO_RED:                100
+        M31_KNOWN:              100
+        M31_QSO:                100
+        M31_STAR:               100
+#       MWS_DDOGIANTS:          100
+        MWS_CLUS_GAL_DEEP:      100
+        LOW_MASS_AGN:           100
+        FAINT_HPM:              100
+        GW190412:               100
+        IC134191:               100
+        PV_BRIGHT:              100
+        PV_DARK:                100
+        LOW_Z:                  100
+        BHB:                    100
+        SPCV:                   100
+        DC3R2_GAMA:             100
+        UNWISE_BLUE:            100
+        UNWISE_GREEN:           100
+        HETDEX_MAIN:            100
+        HETDEX_HP:              100
+#       PSF_OUT_BRIGHT:         100
+#       PSF_OUT_DARK:           100
+        HPM_SOUM:               100
+        SN_HOSTS:               100
+        GAL_CLUS_BCG:           100
+        GAL_CLUS_2ND:           100
+        GAL_CLUS_SAT:           100
+        HSC_HIZ_SNE:            100
+        ISM_CGM_QGP:            100
+        STRONG_LENS:            100
+        WISE_VAR_QSO:           100
+        MWS_CALIB:              100
+        MWS_MAIN_CLUSTER_SV:      1
+        MWS_RRLYR:              100
+        BACKUP_CALIB:           SAME_AS_MWS_CALIB
+        BRIGHT_HPM:             100
+        WD_BINARIES_BRIGHT:     100
+        WD_BINARIES_DARK:       100

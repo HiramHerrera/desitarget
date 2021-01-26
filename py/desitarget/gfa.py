@@ -20,7 +20,7 @@ import desitarget.io
 from desitarget.internal import sharedmem
 from desitarget.gaiamatch import read_gaia_file, find_gaia_files_beyond_gal_b
 from desitarget.gaiamatch import find_gaia_files_tiles, find_gaia_files_box
-from desitarget.gaiamatch import find_gaia_files_hp, _get_gaia_nside
+from desitarget.gaiamatch import find_gaia_files_hp, _get_gaia_nside, gaia_psflike
 from desitarget.uratmatch import match_to_urat
 from desitarget.targets import encode_targetid, resolve
 from desitarget.geomask import is_in_gal_box, is_in_box, is_in_hp
@@ -39,7 +39,7 @@ gfadatamodel = np.array([], dtype=[
     ('RELEASE', '>i4'), ('TARGETID', 'i8'),
     ('BRICKID', 'i4'), ('BRICK_OBJID', 'i4'),
     ('RA', 'f8'), ('DEC', 'f8'), ('RA_IVAR', 'f4'), ('DEC_IVAR', 'f4'),
-    ('TYPE', 'S4'),
+    ('TYPE', 'S4'), ('MASKBITS', '>i2'),
     ('FLUX_G', 'f4'), ('FLUX_R', 'f4'), ('FLUX_Z', 'f4'),
     ('FLUX_IVAR_G', 'f4'), ('FLUX_IVAR_R', 'f4'), ('FLUX_IVAR_Z', 'f4'),
     ('REF_ID', 'i8'), ('REF_CAT', 'S2'), ('REF_EPOCH', 'f4'),
@@ -71,10 +71,7 @@ def gaia_morph(gaia):
     # ADM determine which objects are Gaia point sources.
     g = gaia['GAIA_PHOT_G_MEAN_MAG']
     aen = gaia['GAIA_ASTROMETRIC_EXCESS_NOISE']
-    psf = np.logical_or(
-        (g <= 19.) * (aen < 10.**0.5),
-        (g >= 19.) * (aen < 10.**(0.5 + 0.2*(g - 19.)))
-    )
+    psf = gaia_psflike(aen, g)
 
     # ADM populate morphological information.
     morph = np.zeros(len(gaia), dtype=gfadatamodel["TYPE"].dtype)
@@ -161,7 +158,7 @@ def gaia_gfas_from_sweep(filename, maglim=18.):
 
 
 def gaia_in_file(infile, maglim=18, mindec=-30., mingalb=10.,
-                 nside=None, pixlist=None, addobjid=False):
+                 nside=None, pixlist=None, addobjid=False, addparams=False):
     """Retrieve the Gaia objects from a HEALPixel-split Gaia file.
 
     Parameters
@@ -183,6 +180,10 @@ def gaia_in_file(infile, maglim=18, mindec=-30., mingalb=10.,
     addobjid : :class:`bool`, optional, defaults to ``False``
         If ``True``, include, in the output, a column "GAIA_OBJID"
         that is the integer number of each row read from file.
+    addparams : :class:`bool`, optional, defaults to ``False``
+        If ``True``, include some additional Gaia columns:
+        "GAIA_ASTROMETRIC_EXCESS_NOISE", "GAIA_DUPLICATED_SOURCE"
+        and "GAIA_ASTROMETRIC_PARAMS_SOLVED'.
 
     Returns
     -------
@@ -210,6 +211,10 @@ def gaia_in_file(infile, maglim=18, mindec=-30., mingalb=10.,
     if addobjid:
         for tup in ('GAIA_BRICKID', '>i4'), ('GAIA_OBJID', '>i4'):
             dt.append(tup)
+    if addparams:
+        for tup in [('GAIA_DUPLICATED_SOURCE', '?'),
+                    ('GAIA_ASTROMETRIC_PARAMS_SOLVED', '>i1')]:
+            dt.append(tup)
 
     gfas = np.zeros(len(objs), dtype=dt)
     # ADM make sure all columns initially have "ridiculous" numbers
@@ -221,8 +226,10 @@ def gaia_in_file(infile, maglim=18, mindec=-30., mingalb=10.,
             gfas[col] = -1
     # ADM some default special cases. Default to REF_EPOCH of Gaia DR2,
     # ADM make RA/Dec very precise for Gaia measurements.
+    # ADM MASKBITS should default to zero indicating no flags are set.
     gfas["REF_EPOCH"] = 2015.5
     gfas["RA_IVAR"], gfas["DEC_IVAR"] = 1e16, 1e16
+    gfas["MASKBITS"] = 0
 
     # ADM populate the common columns in the Gaia/GFA data models.
     cols = set(gfas.dtype.names).intersection(set(objs.dtype.names))
@@ -251,8 +258,8 @@ def gaia_in_file(infile, maglim=18, mindec=-30., mingalb=10.,
 
 
 def all_gaia_in_tiles(maglim=18, numproc=4, allsky=False,
-                      tiles=None, mindec=-30, mingalb=10,
-                      nside=None, pixlist=None, addobjid=False):
+                      tiles=None, mindec=-30, mingalb=10, nside=None,
+                      pixlist=None, addobjid=False, addparams=False):
     """An array of all Gaia objects in the DESI tiling footprint
 
     Parameters
@@ -279,6 +286,9 @@ def all_gaia_in_tiles(maglim=18, numproc=4, allsky=False,
     addobjid : :class:`bool`, optional, defaults to ``False``
         If ``True``, include, in the output, a column "GAIA_OBJID"
         that is the integer number of each row read from each Gaia file.
+    addparams : :class:`bool`, optional, defaults to ``False``
+        If ``True``, include some additional Gaia columns:
+        "GAIA_DUPLICATED_SOURCE" and "GAIA_ASTROMETRIC_PARAMS_SOLVED'.
 
     Returns
     -------
@@ -299,7 +309,7 @@ def all_gaia_in_tiles(maglim=18, numproc=4, allsky=False,
         # ADM Gaia "00000" pixel file might not exist.
         dummyfile = find_gaia_files_hp(nside, pixlist[0],
                                        neighbors=False)[0]
-    dummygfas = np.array([], gaia_in_file(dummyfile).dtype)
+    dummygfas = np.array([], gaia_in_file(dummyfile, addparams=addparams).dtype)
 
     # ADM grab paths to Gaia files in the sky or the DESI footprint.
     if allsky:
@@ -317,7 +327,8 @@ def all_gaia_in_tiles(maglim=18, numproc=4, allsky=False,
     def _get_gaia_gfas(fn):
         '''wrapper on gaia_in_file() given a file name'''
         return gaia_in_file(fn, maglim=maglim, mindec=mindec, mingalb=mingalb,
-                            nside=nside, pixlist=pixlist, addobjid=addobjid)
+                            nside=nside, pixlist=pixlist,
+                            addobjid=addobjid, addparams=addparams)
 
     # ADM this is just to count sweeps files in _update_status.
     nfile = np.zeros((), dtype='i8')
